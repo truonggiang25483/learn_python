@@ -24,8 +24,8 @@ def to_roman(n):
 
     if n > 4999:
         return "--> Number out of Range!"
-
-    num_breaks = (1000,900,500,400,100,90,50,40,9,5,4,1)
+    #Create tuple and dictionary#
+    num_breaks = (1000,900,500,400,100,90,50,40,10,9,5,4,1)
 
     letters = {
         1000: "M",
@@ -43,11 +43,12 @@ def to_roman(n):
         1:"I"
         }
 
+    #Start the algorithm#
     result = ""
     for value in num_breaks:
         while n >= value:
             result = result + letters[value]
-        n = n - value
+            n = n - value    
     return result
 
 def to_binary(n):

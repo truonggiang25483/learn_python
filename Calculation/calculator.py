@@ -43,12 +43,12 @@ for btntext in numpadlist:
 
 #Operator#
 operator = Frame(window)
-operator.grid(row = 3, column = 1, sticky = W)
+operator.grid(row = 1, column = 1, sticky = W)
 
 operatorlist = [
-    '*','/',
-    '+','-',
-    '(',')',
+    ' * ',' / ',
+    ' + ',' - ',
+    ' ( ',' ) ',
     'c'
     ]
 
@@ -64,6 +64,92 @@ for b in operatorlist:
     if c > 1:
         c = 0
         r = r + 1
+
+#Constants#
+constants = Frame(window)
+constants.grid(row = 3, column = 0, sticky = W)
+constantslist = [
+'pi',
+'Speed of Light(m/s)',
+'Speed of Sound(m/s)',
+'Ave Distance to Sun(km)']
+
+r = 0
+c = 0
+
+for b in constantslist:
+    def cmd(x = b):
+        click(x)
+
+    Button(constants,text = b, width = 22, command = cmd).grid(row = r, column = c)
+    r = r + 1
+
+#Functions#
+functions = Frame(window)
+functions.grid(row = 3, column = 1, sticky = W)
+functionslist = [
+'Factorial(!)',
+'-> Roman',
+'Decimal -> Binary',
+'Binary -> Decimal']
+
+r = 0
+c = 0
+
+for b in functionslist:
+    def cmd(x = b):
+        click(x)
+
+    Button(functions,text = b, width = 13, command = cmd).grid(row = r, column = c)
+    r = r + 1
+
+def click(key):
+    if key == "=":
+        try:
+            temp = str(display.get())
+            resultchars = temp.split()
+
+            for i in range(0,len(resultchars)):
+                if (not(resultchars[i] == "+" or resultchars[i] == "-" or resultchars[i] == "/" or resultchars[i] == "*" or resultchars[i] == "(" or resultchars[i] == ")")):
+                    resultchars[i] = float(resultchars[i])
+                    
+            temp = ""
+            for i in range(0,len(resultchars)):
+                temp = temp + str(resultchars[i])
+
+            result = str(eval(temp))[0:10]
+            display.delete(0, END)
+            display.insert(END, "=" + result)
+        except:
+            display.insert(END, "--> Syntax Error")
+    elif key == "c":
+        display.delete(0, END)
+    elif key == constantslist[0]:
+        display.insert(END,"3.141592654")
+    elif key == constantslist[1]:
+        display.insert(END,"300000000")
+    elif key == constantslist[2]:
+        display.insert(END,"330")
+    elif key == constantslist[3]:
+        display.insert(END,"149597887.5")
+    elif key == functionslist[0]:
+        n = display.get()
+        display.delete(0,END)
+        display.insert(END,calc_functions.factorial(n))
+    elif key == functionslist[1]:
+        n = display.get()
+        display.delete(0,END)
+        display.insert(END,calc_functions.to_roman(n))
+    elif key == functionslist[2]:
+        n = display.get()
+        display.delete(0,END)
+        display.insert(END,calc_functions.to_binary(n))
+    elif key == functionslist[3]:
+        n = display.get()
+        display.delete(0,END)
+        display.insert(END,calc_functions.from_binary(n))
+    else:
+        display.insert(END,key)
 
 #Mainloop#
 window.mainloop()
